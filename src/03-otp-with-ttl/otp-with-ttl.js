@@ -31,7 +31,7 @@ router.post("/", async (req, res, next) => {
 		res.status(500).json({
 			success: false,
 			message: "Failed to send the OTP",
-			cause: error.message,
+			error: error.message,
 		});
 	}
 });
@@ -68,7 +68,7 @@ router.post("/verify", async (req, res, next) => {
 		res.status(500).json({
 			success: false,
 			message: "Failed to verify the OTP",
-			cause: error.message,
+			error: error.message,
 		});
 	}
 });
@@ -88,7 +88,7 @@ router.get("/:phone/ttl", async (req, res, next) => {
 		res.status(500).json({
 			success: false,
 			message: "Error while checking TTL",
-			cause: error.message,
+			error: error.message,
 		});
 	}
 });
@@ -123,7 +123,7 @@ router.delete("/", async (req, res, next) => {
 		res.status(500).json({
 			success: false,
 			message: "Error while deleting OTP",
-			cause: error.message,
+			error: error.message,
 		});
 	}
 });
