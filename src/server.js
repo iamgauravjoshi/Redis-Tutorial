@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 import siteBannerRoutes from "./02-site-banner/site-banner.js";
 import otpVerificationRoutes from "./03-otp-with-ttl/otp-with-ttl.js";
 import userProfileRoutes from "./04-user-profile/user-profile.js";
+import emailQueueRoutes from "./05-email-queue/email-queue.js";
 
 const port = process.env.PORT || 3000;
 
@@ -24,6 +25,9 @@ app.use("/otp", otpVerificationRoutes);
 
 // ------- User Profile -------
 app.use("/user", userProfileRoutes);
+
+// ------- Email Queue with Redis list -------
+app.use("/emails", emailQueueRoutes);
 
 app.get("/", async (req, res) => {
 	return res.status(200).json({ success: true, message: "Server is running" });

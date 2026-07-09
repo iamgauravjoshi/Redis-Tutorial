@@ -71,7 +71,7 @@ router.get("/:id/json", async (req, res) => {
 
 		const user = await redis.get(key);
 
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			message: "User profile fetched successfully.",
 			method: "json",
@@ -139,7 +139,7 @@ router.get("/:id/hash", async (req, res) => {
 
 		const user = await redis.hgetall(key);
 
-		res.status(200).json({
+		return res.status(200).json({
 			success: true,
 			message: "User profile fetched successfully.",
 			method: "hash",
@@ -164,19 +164,19 @@ router.delete("/:id", async (req, res, next) => {
 
 		const isKeyExists = await isValidKey(key);
 
-		if (isKeyExists) {
-			await redis.del(key);
-
-			return res.status(200).json({
-				success: true,
-				message: "User profile deleted successfully.",
-			});
-		} else {
+		if (!isKeyExists) {
 			return res.status(404).json({
 				success: false,
 				message: "User profile key not found.",
 			});
 		}
+
+		await redis.del(key);
+
+		return res.status(200).json({
+			success: true,
+			message: "User profile deleted successfully.",
+		});
 	} catch (error) {
 		res.status(500).json({
 			success: false,
